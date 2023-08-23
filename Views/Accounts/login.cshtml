@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/login.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c165f78c1.js" crossorigin="anonymous"></script>
+    <script src="~/js/login.js"></script>
+}
+<div class="container">
+    <h1>Đăng Nhập</h1>
+    <form asp-action="login" asp-controller="Accounts" method="post">
+        <div class="form__row">
+            <i class="fa-solid fa-envelope icon icon_email"></i>
+            <input type="text" name="username" class="form__input" placeholder="Email" autocomplete="off">
+        </div>
+        <div class="form__row">
+            <i class="fa-solid fa-lock icon icon_pass"></i>
+            <input type="password" name="password" class="form__input" placeholder="Password">
+        </div>
+        <div class="form__row form__but">
+            <button type="submit" class="btn">Đăng nhập</button>
+        </div>
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="form__row">
+            <p class="error-message">@ViewBag.ErrorMessage</p>
+            </div>
+        }
+        <div class="form__row form__register">
+            <h5>Bạn chưa có tài khoản? <a style="color:white" href="/register.html">Đăng Ký Ngay</a></h5>
+        </div>
+    </form>
+</div>
+@if(ViewBag.er!=null){
+    <script>
+        alert("Tài khoản hoặc mật khẩu không chính xác!");
+        </script>
+}

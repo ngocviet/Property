@@ -1,0 +1,28 @@
+﻿@model CategoryDetail
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Chi tiết Thể loại đất</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<hr />
+<div class="row">
+    <div></div>
+    <div class="col-lg-12 profile_body">
+        <div class="profile_item">
+            Tên thể loại đất:
+            <span class="profile_content">@Model.CategoryDetailName.ToUpper()</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Mô tả:
+            <span class="profile_content">@Model.Description</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Kiểu đất:
+            <span class="profile_content">@Model.Category.CategoryName</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,176 @@
+﻿@model Property.ViewsModel.CreateListingViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Tạo bài đăng</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<form asp-action="Create" asp-controller="Listings" asp-area="Admin" method="post">
+    <div clas="row" style="margin-bottom:100px;">
+        <div class="create_container">
+            <div class="create_header">
+                <h4>Thông tin cơ bản</h4>
+            </div>
+            <div class="createlt_category">
+                <button type="button" class="createlt_category_selected createlt_category_ban">Bán</button>
+                <button type="button" class="createlt_category_chothue">Cho thuê</button>
+            </div>
+            <div>
+                <div class="createlt_title">
+                    Loại bất động sản <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <select class="createlt_categoryDetail" asp-for="Realty.CategoryDetailId" asp-items="ViewBag.CategoryDetailId" id="selectRealty">
+                    <optgroup class="custom-optgroup" label="Chọn loại bất động sản">
+                        <option selected hidden>VD: Nhà riêng</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Địa chỉ <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input placeholder="Ví dụ: Hưng Yên, Yên Mỹ, Đồng Than, Tráng Vũ" asp-for="Realty.Address" />
+            </div>
+            <div class="createlt_account">
+                <div class="createlt_title">
+                    Tài khoản đăng <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <select class="createlt_categoryDetail" asp-for="Listing.AccountId" class="form-control" asp-items="ViewBag.AccountId" id="selectAccount">
+                    <optgroup class="custom-optgroup" label="Chọn tài khoản">
+                        <option selected hidden>VD: Ngọc Việt</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <div class="create_container">
+            <div class="create_header">
+                <h4>Thông tin bài viết</h4>
+            </div>
+            <div class="createlt_lttitle">
+                <div class="createlt_title">
+                    Tiêu đề <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <textarea placeholder="VD: Bán nhà riêng 50m2 chính chủ tại Cầu Giấy" rows="2" asp-for="Listing.Title"></textarea>
+            </div>
+            <div class="createlt_decription">
+                <div class="createlt_title">
+                    Mô tả <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <textarea asp-for="Listing.Description" placeholder="Nhập mô tả chung về bất động sản của bạn. Ví dụ: Khu nhà có vị trí thuận lợi, gần công viên, gần trường học ... " rows="4"></textarea>
+            </div>
+        </div>
+        <div class="create_container">
+            <div class="create_header">
+                <h4>Thông tin bất động sản</h4>
+            </div>
+            <div class="createlt_nameRealty">
+                <div class="createlt_title">
+                    Tên bất động sản <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input placeholder="Nhập tên" asp-for="Realty.Title" class="form-control" />
+            </div>
+            <div class="createlt_areaRealty">
+                <div class="createlt_title">
+                    Diện tích <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input type="number" placeholder="Nhập diện tích" asp-for="Realty.Area" />
+            </div>
+            <div class="createlt_priceRealty">
+                <div class="createlt_title">
+                    Giá <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input placeholder="Nhập giá" type="number" asp-for="Realty.Price"/>
+            </div>
+            <div class="createlt_imgRealty">
+                <div class="createlt_title">
+                    Hình ảnh <i class="fa-solid fa-star-of-life star_createlt"></i> <div class="amount_img_createlt" style="margin-left:4px;"></div>
+                </div>
+                <div class="xem_Truoc_img">( Xem trước )</div>
+                <img class="main_img" src="~/images/avatar.jpg" style="display:none;" />
+                <input asp-for="Images" style="display:block" hidden id="url_imgs"/>
+                <div class="btn_chon_anh">
+                    <input class="form-control" type="file" name="img" hidden accept="image/*" id="avatar-input">
+                    <input id="avatar-file-name" hidden class="text-muted form-control" />
+                    <button type="button" class="btn btn_profile btn_chooseimg" onclick="chooseFile()">Thêm ảnh</button>
+                </div>
+            </div>
+            <div class="createlt_imgRealty">
+                <div class="createlt_title">
+                    Nội thất <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <button type="button" class="btn btn_noithat" onclick="handleBtnClick('Đầy đủ')">Đầy đủ</button>
+                <button type="button" class="btn btn_noithat" onclick="handleBtnClick('Cơ bản')">Cơ bản</button>
+                <button type="button" class="btn btn_noithat" onclick="handleBtnClick('Không nội thất')">Không nội thất</button>
+                <input id="noiThat" asp-for="Realty.Interior" hidden/>
+            </div>
+            <div class="createlt_room">
+                <div class="createlt_title">
+                    Số phòng ngủ <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input type="number" value="1" asp-for="Realty.Bedrooms"/>
+            </div>
+            <div class="createlt_room">
+                <div class="createlt_title">
+                    Số phòng tắm, vệ sinh <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input type="number" value="1" asp-for="Realty.Bathrooms" />
+            </div>
+            <div class="createlt_huong_nha">
+                <div class="createlt_title">
+                    Hướng nhà <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <select class="createlt_categoryDetail" asp-for="Realty.HouseDirection" class="form-control" id="selectDirection">
+                    <optgroup class="custom-optgroup" label="Chọn hướng nhà">
+                        <option selected hidden>Chọn hướng</option>
+                        <option>Đông</option>
+                        <option>Tây</option>
+                        <option>Nam</option>
+                        <option>Bắc</option>
+                        <option>Đông Bắc</option>
+                        <option>Đông Nam</option>
+                        <option>Tây Bắc</option>
+                        <option>Tây Nam</option>
+                    </optgroup>
+                </select>
+                
+            </div>
+            <button type="submit" class="btn btn_profile btn_submit" style="margin-top:20px;">submit</button>
+        </div>
+    </div>
+</form>
+
+@if (ViewBag.er != null)
+{
+    <script>
+        alert("Tài khoản đã hết lượt đăng!")
+    </script>
+}
+@if (ViewBag.thieuthongtin != null)
+{
+    <script>
+        alert("Hãy nhập đầy đủ thông tin!")
+    </script>
+}
+@if (ViewBag.trungtieudelis != null)
+{
+    <script>
+        alert("Trùng tiêu đề với bài đăng khác!")
+    </script>
+}
+@if (ViewBag.trungtieuderea != null)
+{
+    <script>
+        alert("Trùng tên với bất động sản khác!")
+    </script>
+}
+<script src="~/js/createlisting.js">
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

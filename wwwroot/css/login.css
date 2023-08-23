@@ -1,0 +1,119 @@
+﻿html {
+    font-size: 24px;
+    color: #00ffd6;
+}
+
+body {
+    background-image: url('../images/bannershowall.jpg');
+    background-size: cover;
+}
+
+.container {
+    max-width: 500px;
+    padding: 40px;
+    margin: 150px auto;
+    transition: opacity linear 0.3s;
+}
+
+/*.container {
+    background: rgba(189, 178, 178, 0.32);
+    border-radius: 40px;
+}*/
+/*
+.form__label {
+    min-width: 140px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}*/
+
+.form__input {
+    flex: 1;
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    color: #fff;
+    border:unset;
+    border-bottom: 1px solid #fff;
+    border-radius: 3px;
+    background: transparent;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding:8px;
+    padding-left:35px;
+}
+
+.form__row {
+    display: flex;
+    margin-top: 15px;
+    position:relative;
+}
+
+.btn {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    align-self: center;
+    color: #fff;
+    padding: 15px 20px;
+    border: 2px solid rgb(70, 96, 181);
+    /*opacity: 0.8;*/
+    transition: opacity linear 0.3s;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: rgba(0, 0, 255, 0.8);
+    font-weight:800;
+    cursor:pointer;
+}
+.btn{
+    font-size:18px;
+    font-weight:700;
+    height:60px;
+    width:100%;
+}
+
+.form__but {
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+input{
+    padding:3px;
+}
+input::placeholder{
+    color: #00ffd6;
+}
+.icon {
+    position: absolute;
+    left: 5px;
+    top: 7px;
+}
+.icon_pass {
+    top: 4px;
+    left: 7px;
+}
+.form__register {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form__register h5 {
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.form__register a{
+    cursor:pointer;
+    color:aquamarine!important;
+    font-style:italic;
+}
+.error-message {
+    color: red;
+    text-align: center;
+    flex: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}

@@ -1,0 +1,58 @@
+﻿@model Image
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Thêm mới hình ảnh</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<form asp-action="Create" asp-controller="Packages" asp-area="Admin" method="post">
+    <div clas="row" style="margin-bottom:100px;">
+        <div class="create_container">
+            <div class="create_header">
+                <h4>Thông tin cơ bản</h4>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Tên bất động sản <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <select asp-for="RealtyId" class="form-control" asp-items="ViewBag.RealtyId"></select>
+            </div>
+            <div class="createlt_imgRealty">
+                <div class="createlt_title">
+                    Hình ảnh <i class="fa-solid fa-star-of-life star_createlt"></i> <div class="amount_img_createlt" style="margin-left:4px;"></div>
+                </div>
+                <img class="main_img" src="~/images/avatar.jpg" style="display:none;" />
+                <div class="btn_chon_anh">
+                    <input class="form-control" type="file" name="img" hidden accept="image/*" id="avatar-input">
+                    <input asp-for="ImageUrl" id="avatar-file-name" hidden class="text-muted form-control" />
+                    <button type="button" class="btn btn_profile btn_chooseimg" onclick="chooseFile()">Thêm ảnh</button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn_profile btn_submit" style="margin-top:20px;">submit</button>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script>
+        function chooseFile() {
+            document.getElementById('avatar-input').click();
+        }
+        document.getElementById('avatar-input').addEventListener('change', function () {
+            var fileInput = document.getElementById('avatar-input');
+            var fileNameInput = document.getElementById('avatar-file-name');
+            fileNameInput.value = fileInput.files[0].name;
+
+            var selectedImageFile = fileInput.files[0];
+            // Check if a file is selected
+            if (selectedImageFile) {
+                var imagePath = "/images/" + selectedImageFile.name;
+                document.querySelector('.main_img').src = imagePath;
+                document.querySelector('.main_img').style.display = 'block';
+            }
+        });
+    </script>
+}

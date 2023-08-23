@@ -1,0 +1,108 @@
+﻿@model Property.Models.Listing
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Chi tiết bài đăng</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<hr />
+<div class="row" style="margin-bottom:30px;">
+    <div></div>
+    <div class="col-lg-8 profile_body">
+        <div class="profile_item" style="line-height:34px;">
+            Tiêu đề:
+            <span class="profile_content">@Model.Title.ToUpper()</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Tên bất động sản:
+            <span class="profile_content">@Model.Realty.Title</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Thể loại đất:
+            <span class="profile_content">@Model.Realty.CategoryDetail.CategoryDetailName</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Địa chỉ:
+            <span class="profile_content">@Model.Realty.Address</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Mô tả:
+            <span class="profile_content">@Model.Description</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Người đăng:
+            <span class="profile_content">@Model.Account.Name</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Diện tích:
+            <span class="profile_content">@Model.Realty.Area m<sup>2</sup></span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Giá:
+            @{
+                string priceString = @Model.Realty.Price.ToString().Replace(".", ",");
+                priceString = priceString.TrimEnd('0').TrimEnd(',');
+            }
+            @if (Model.Realty.CategoryDetail.Category.CategoryId == 2)
+            {
+                <span class="ct_info_content">
+                    @priceString
+                    <label>triệu / month</label>
+                </span>
+            }
+            else
+            {
+                var price = (double)Model.Realty.Price;
+                price = price * 1000 / (double)Model.Realty.Area;
+                var formattedPrice = price.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
+                formattedPrice = formattedPrice.ToString().Replace(".", ",");
+                formattedPrice = formattedPrice.TrimEnd('0').TrimEnd(',');
+                <span>
+                    @priceString
+                    <label> tỷ</label>
+                    <label class="ct_info_content_them">~ @formattedPrice triệu/m<sup>2</sup></label>
+                </span>
+            }
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Nôi thất:
+            <span class="profile_content">@Model.Realty.Interior</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Số phòng ngủ:
+            <span class="profile_content">@Model.Realty.Bedrooms</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Số phòng tắm:
+            <span class="profile_content">@Model.Realty.Bathrooms</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Hướng nhà:
+            <span class="profile_content">@Model.Realty.HouseDirection</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Lượt xem:
+            <span class="profile_content">@Model.ViewAmount lượt</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Ngày đăng:
+            <span class="profile_content">@Model.CreatedAt.Value.ToString("dd/MM/yyyy")</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Ngày hết hạn:
+            <span class="profile_content">@Model.CreatedAt.Value.AddDays(10).ToString("dd/MM/yyyy")</span>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="detail_img">
+            @foreach (var item in Model.Realty.Images)
+            {
+                <img src="~/images/@item.ImageUrl" width="400px">
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@model CategoryDetail
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Sửa thể loại nhà đất</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<form asp-action="Edit" asp-controller="CategoryDetails" asp-area="Admin" method="post">
+    <div clas="row" style="margin-bottom:100px;">
+        <div class="create_container">
+            <div class="create_header">
+                <h4>Thông tin cơ bản</h4>
+            </div>
+            <input type="hidden" asp-for="CategoryDetailId" />
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Tên thể loại <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="CategoryDetailName" class="form-control" />
+                <span asp-validation-for="CategoryDetailName" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Mô tả <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Kiểu đất <i class="fa-solid fa-star-of-life star_createlt"></i> <div class="amount_img_createlt" style="margin-left:4px;"></div>
+                </div>
+                <select class="createlt_categoryDetail" asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId" id="selectAccount">
+                    <optgroup class="custom-optgroup" label="Chọn gói đăng">
+                    </optgroup>
+                </select>
+            </div>
+            <button type="submit" class="btn btn_profile btn_submit" style="margin-top:20px;">Sửa</button>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

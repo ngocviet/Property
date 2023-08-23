@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Property.Models.Package>
+@{
+    ViewData["Title"] = "Package";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-banner banner_profile">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</div>
+<div class="container container_package_header">
+    <div class="row">
+        <div class="col-lg-12 package">
+            <div class="baidang_header">
+                <div class="baidang_header_account">
+                    <img src="~/images/avatar.jpg" />
+                    <div class="baidang_header_name">
+                        <div>LÊ NGỌC VIỆT</div>
+                        <div><i class="fa-solid fa-location-dot"></i>Hồ Chí Minh</div>
+                    </div>
+                </div>
+                <div class="baidang_header_phone">
+                    <div><i class="fa-solid fa-phone-volume"></i>096562****. Hiện số</div>
+                </div>
+            </div>
+        </div>
+        <div class="row package_body">
+            @{
+                double opacityValue = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3_baidang">
+                    <div class="package_item">
+                        <div class="package_item_img">
+                            <i class="fa-solid fa-cube" style="color: #125ddb; opacity: @opacityValue"></i>
+                        </div>
+                        <div class="package_item_info">
+                            <div class="package_item_name">
+                                @item.PackageName
+                            </div>
+                            <div class="package_item_price">
+                                <i style="color: black; margin-right: 10px" class="fa-solid fa-coins"></i> @item.Price VNĐ
+                            </div>
+                            <div class="package_item_duration">
+                                <i style="color: black; margin-right: 10px" class="fa-solid fa-calendar-days"></i> @item.NumberPost lần đăng
+                            </div>
+                            <div class="btn_purchase">
+                                <button class="btn" onclick="purchase(@item.PackageId)">Mua</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (opacityValue <= 1.0)
+                {
+                    opacityValue -= 0.2;
+                }
+            }
+        </div>
+    </div>
+</div>
+<script>
+    function purchase(idpack){
+        alert('Vui lòng thanh toán và chờ admin xác nhận!');
+        window.location.href = '/Home/Purchase/' + idpack;
+    }
+</script>
+

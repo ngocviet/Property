@@ -1,0 +1,84 @@
+﻿@model Property.Models.Realty
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Sửa bất động sản</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<form asp-action="Edit" asp-controller="Realties" asp-area="Admin" method="post">
+    <div clas="row" style="margin-bottom:100px;">
+        <div class="create_container">
+            <div class="create_header">
+                <h4>Thông tin cơ bản</h4>
+            </div>
+            <input type="hidden" asp-for="RealtyId" />
+            <input type="hidden" asp-for="CategoryDetailId" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Tên bất động sản: <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Title" class="form-control" type="text"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Địa chỉ: <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Address" class="form-control" type="text"/>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Giá <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Price" class="form-control" type="number"/>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Số phòng ngủ<i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Bedrooms" class="form-control" type="number" />
+                <span asp-validation-for="Bedrooms" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Số phòng tắm<i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Bathrooms" class="form-control" type="number" />
+                <span asp-validation-for="Bathrooms" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Hướng nhà<i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="HouseDirection" class="form-control" />
+                <span asp-validation-for="HouseDirection" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Nội thất<i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Interior" class="form-control" />
+                <span asp-validation-for="Interior" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Diện tích<i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Area" class="form-control" type="number" />
+                <span asp-validation-for="Area" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn_profile btn_submit" style="margin-top:20px;">Tiếp tục</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

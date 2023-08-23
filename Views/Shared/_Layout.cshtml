@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c165f78c1.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>@ViewData["Title"]</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="~/css/fontawesome.css">
+    <link rel="stylesheet" href="~/css/templatemo-plot-listing.css">
+    <link rel="stylesheet" href="~/css/animated.css">
+    <link rel="stylesheet" href="~/css/owl.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <!-- ***** Logo Start ***** -->
+                        <a asp-action="Index" asp-controller="Home" class="logo">
+                        </a>
+                        <!-- ***** Logo End ***** -->
+                        <!-- ***** Menu Start ***** -->
+                        <ul class="nav">
+                            @*<li><a asp-action="Index" asp-controller="Home" class="active">Home</a></li>*@
+
+                            <li onclick="toggleActive(this)"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                            <li onclick="toggleActive(this)"><a href="/showall.html">BĐS</a></li>
+                            @*<li onclick="toggleActive(this)"><a href="#">Liên Hệ</a></li>*@
+                            <li class="li_no_hover" style="margin-right:10px;">
+                                @if (User.Identity.IsAuthenticated && User.Claims.FirstOrDefault(c => c.Type == "permission").Value.Equals("User"))
+                                {
+                                    <img onclick="showUserList()" style="width:40px;" class="img-profile img_profile rounded-circle" src="~/images/@User.Claims.FirstOrDefault(v=>v.Type == "avatar").Value">
+                                }
+                                else
+                                {
+                                    <a href="/login.html" style="font-size:24px;">
+                                        <i class="fa fa-user"></i>
+                                    </a>
+                                }
+                            </li>
+                            <div id="userList" style="display: none;">
+                                <ul>
+                                    <a href="/profile.html">
+                                    <li>Hồ sơ</li></a>
+                                    @if (User.Identity.IsAuthenticated && User.Claims.FirstOrDefault(c => c.Type == "permission").Value.Equals("User"))
+                                    {
+                                        <a href="/listing.html?idaccount=@User.Claims.FirstOrDefault(c => c.Type == "iduser").Value">
+                                        <li>Bài đăng</li></a>
+                                    }
+                                    <a href="/package.html">
+                                    <li>Gói đăng</li></a>
+                                    <a href="/logout.html">
+                                    <li>Đăng xuất</li></a>
+                                </ul>
+                            </div>
+                            <li style="display:none"></li>
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+    @RenderBody()
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="about">
+                        <div class="logo">
+                            <img src="~/images/black-logo.png" alt="Plot Listing">
+                        </div>
+                        <p>If you consider that <a rel="nofollow" href="https://templatemo.com/tm-564-plot-listing" target="_parent">Plot Listing template</a> is useful for your website, please <a rel="nofollow" href="https://www.paypal.me/templatemo" target="_blank">support us</a> a little via PayPal.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="helpful-links">
+                        <h4>Helpful Links</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6">
+                                <ul>
+                                    <li><a href="#">Categories</a></li>
+                                    <li><a href="#">Reviews</a></li>
+                                    <li><a href="#">Listing</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Awards</a></li>
+                                    <li><a href="#">Useful Sites</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="contact-us">
+                        <h4>Contact Us</h4>
+                        <p>27th Street of New Town, Digital Villa</p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="#">010-020-0340</a>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="#">090-080-0760</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/owl-carousel.js"></script>
+    <script src="~/js/animation.js"></script>
+    <script src="~/js/imagesloaded.js"></script>
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

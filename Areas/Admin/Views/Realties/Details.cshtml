@@ -1,0 +1,97 @@
+﻿@model Property.Models.Realty
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h1>Chi tiết kiểu đất</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>  
+<hr />
+<div class="row">
+    <div></div>
+    <div class="col-lg-8 profile_body">
+        <div class="profile_item">
+            Tên bất động sản:
+            <span class="profile_content">@Model.Title.ToUpper()</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Địa chỉ:
+            <span class="profile_content">@Model.Address</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Giá:
+            @{
+                string priceString = @Model.Price.ToString().Replace(".", ",");
+                priceString = priceString.TrimEnd('0').TrimEnd(',');
+            }
+            @if (Model.CategoryDetail.Category.CategoryId == 2)
+            {
+                <span>
+                    @priceString
+                    <label>triệu / month</label>
+                </span>
+            }
+            else
+            {
+                var price = (double)Model.Price;
+                price = price * 1000 / (double)Model.Area;
+                var formattedPrice = price.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
+                formattedPrice = formattedPrice.ToString().Replace(".", ",");
+                formattedPrice = formattedPrice.TrimEnd('0').TrimEnd(',');
+                <span>
+                    @priceString
+                    <label> tỷ</label>
+                    <label class="ct_info_content_them">~ @formattedPrice triệu/m<sup>2</sup></label>
+                </span>
+            }
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Diện tích:
+            <span class="profile_content">@Model.Area</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Loại đất:
+            <span class="profile_content">@Model.CategoryDetail.CategoryDetailName</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Số phòng ngủ:
+            <span class="profile_content">@Model.Bedrooms</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Số phòng tắm:
+            <span class="profile_content">@Model.Bathrooms</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Nội thất:
+            <span class="profile_content">@Model.Interior</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Hướng nhà:
+            <span class="profile_content">@Model.HouseDirection</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Ngày tạo:
+            <span class="profile_content">@Model.CreatedAt</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Bài đăng:
+            @if(Model.Listings.Count() > 0){
+                <a asp-action="Details" asp-controller="Listings" asp-route-id="@Model.Listings.FirstOrDefault().ListingId"><span>Xem</span></a>
+            }
+            else
+            {
+            <span>Chưa có</span>
+            }
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="detail_img">
+            @foreach (var item in Model.Images)
+            {
+                <img src="~/images/@item.ImageUrl" width="400px">
+            }
+        </div>
+    </div>
+</div>

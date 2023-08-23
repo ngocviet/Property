@@ -1,0 +1,167 @@
+﻿@model IEnumerable<Property.Models.Listing>
+
+@{
+    ViewData["Title"] = "Danh sách";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Danh sách các bài đăng</h1>
+    <div class="group_button">
+        <div class="button_confirm">
+            <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
+            <a asp-action="Exam" asp-controller="Listings" class="btn btn-primary">Kiểm tra</a>
+        </div>
+        <div class="button_confirm">
+            <button class="btn_confirm btn btn_selected" onclick="toggleTable('table_no_confirm', 'table_confirm', this)">Chưa hết hạn</button>
+            <button class="btn_confirm btn" onclick="toggleTable('table_confirm', 'table_no_confirm', this)">Đã hết hạn</button>
+        </div>
+    </div>
+    <div class="card shadow mb-4 table_no_confirm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Location)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Account)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Realty)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Location)
+                                </td>
+                                <td class="text-ellipsis">
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Account.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Realty.Title)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.ListingId" class="btn btn-outline-primary" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.ListingId" class="btn btn-outline-warning" title="Detail"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a onclick="deletee(@item.ListingId);" href="#" class="btn btn-outline-danger" title="delete"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4 table_confirm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Location)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Account)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Realty)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in (IEnumerable<Property.Models.Listing>)ViewData["list_duration"])
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Location)
+                                </td>
+                                <td class="text-ellipsis">
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Account.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Realty.Title)
+                                </td>
+                                <td>
+                                    <a onclick="khoiphuc(@item.ListingId)" href="#" class="btn btn-outline btn_check" title="Restore"><i class="fa-solid fa-rotate"></i></a>
+                                    <a asp-action="Edit" asp-route-id="@item.ListingId" class="btn btn-outline-primary" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.ListingId" class="btn btn-outline-warning" title="Detail"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a onclick="deletee(@item.ListingId);" href="#" class="btn btn-outline-danger" title="delete"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+@if (ViewBag.amountDuration != null)
+{
+    <input value="@ViewBag.amountDuration" hidden id="mess" />
+}
+@if (ViewBag.sucedit != null)
+{
+    <script>
+        alert("Chỉnh sửa thành công")
+    </script>
+}
+
+@section Scripts {
+    <script>
+        function deletee(ID) {
+            if (confirm("Bạn chắc chắn muốn xóa?")) {
+                var url = '@Url.Action("Delete", "Listings", new { area = "Admin" })';
+                url = url + "?id=" + ID;
+                location.href = url;
+            }
+        }
+        function khoiphuc(ID) {
+            if (confirm("Bạn chắc chắn muốn khôi phục?")) {
+                var url = '@Url.Action("Restore", "Listings", new { area = "Admin" })';
+                url = url + "?id=" + ID;
+                location.href = url;
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            var inputElement = document.getElementById("mess");
+            var inputValue = inputElement.value;
+            if (inputValue !== null && inputValue.trim() !== "") {
+                alert(inputValue);
+            }
+        });
+        function toggleTable(showTable, hideTable, button) {
+            var tableToShow = document.querySelector('.' + showTable);
+            var tableToHide = document.querySelector('.' + hideTable);
+            var buttons = button.parentElement.getElementsByClassName("btn_confirm");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("btn_selected");
+            }
+            button.classList.add("btn_selected");
+            tableToShow.style.display = 'block';
+            tableToHide.style.display = 'none';
+        }
+    </script>
+}

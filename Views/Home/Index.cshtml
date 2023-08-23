@@ -1,0 +1,301 @@
+﻿@using System.Globalization
+@model IEnumerable<Property.Models.Listing>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="main-banner">
+    <div class="container" style="margin-top:145px;">
+        <div class="row">
+            <div class="col-lg-12">
+                @*form*@
+                <form asp-action="TypeListing" asp-controller="Home" id="search-form" name="gs" method="submit" role="search">
+                    <div class="row">
+                        <div class="col-lg-2 align-self-center">
+                            <fieldset>
+                                <div class="title_realty" id="titleRealty" onclick="toggleListTypeRealty()">
+                                    <i class="fa-sharp fa-solid fa-house-chimney"></i>
+                                    <div class="title_realty_content">
+                                        Loại nhà đất
+                                    </div>  
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <input hidden name="idCategoryDetail" id="idcategorydetail" style="position:absolute" value="" />
+                                <div class="list_type_realty" id="listTypeRealty">
+                                    <ul>
+                                        @foreach (var item in (IEnumerable<Property.Models.CategoryDetail>)ViewData["list_category_realties"])
+                                        {
+                                            <li onclick="changeTitleContent('@item.CategoryDetailName', this, '@item.CategoryDetailId')">@item.CategoryDetailName</li>
+                                        }
+                                    </ul>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-9 align-self-center">
+                            <fieldset>
+                                <input name="address" class="searchText" placeholder="Tìm kiếm" autocomplete="on">
+                            </fieldset>
+                        </div>
+                        <div class="col-lg-1" style=" padding-right:0px">
+                            <fieldset>
+                                <button class="main-button"><i class="fa fa-search" style="margin-right:0;"></i></button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="recent-listing">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2>Danh sách bài đăng</h2>
+                    <h6 class="showall"><a href="/showall.html" style="color:black">Xem tất cả</a></h6>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="owl-carousel owl-listing">
+                    @{
+                        int count = 1;
+                    }
+                    <div class="item">
+                        <div class="row">
+                            @foreach (var item in (IEnumerable<Property.Models.Listing>)ViewData["Var1"])
+                            {
+                                <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId">
+                                    <div class="col-lg-12">
+                                        <div class="listing-item">
+                                            <div class="left-image">
+                                                @if (item.Realty.Images.Count > 0)
+                                                {
+                                                    foreach (var img in @item.Realty.Images)
+                                                    {
+                                                        if (img.Status == true)
+                                                        {
+                                                            continue;
+                                                        }
+                                                        <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><img class="img_listing" src="~/images/@img.ImageUrl" alt=""></a>
+                                                        break;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><img class="img_listing" src="~/images/noimg.gif" alt=""></a>
+                                                }
+                                            </div>
+                                            <div class="right-content align-self-center">
+                                                <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><h4 style="float:left">@count . </h4><h4 class="clamp-2-lines">@item.Title</h4></a>
+                                                <a asp-controller="Home" asp-action="Listing" asp-route-idaccount="@item.Account.AccountId">
+                                                    <h6>by: @item.Account.Name</h6>
+                                                </a>
+                                                <ul class="rate">
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li>(18) Reviews</li>
+                                                </ul>
+                                                <span class="price">
+                                                    <div class="icon"><img src="~/images/listing-icon-01.png" alt=""></div>
+                                                    @{
+                                                        string priceString = @item.Realty.Price.ToString().Replace(".", ",");
+                                                        if (priceString.EndsWith(",00"))
+                                                        {
+                                                            priceString = @item.Realty.Price.ToString().Replace(".00", " ");
+                                                        }
+                                                        <span>@priceString</span>
+                                                    }
+                                                    @if (@item.Realty.CategoryDetail.Category.CategoryId == 2)
+                                                    {
+                                                        <span>triệu / month</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        var price = (double)item.Realty.Price;
+                                                        price = price * 1000 / (double)item.Realty.Area;
+                                                        var formattedPrice = price.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
+                                                        <span>tỷ - @formattedPrice Triệu / m<sup>2</sup></span>
+                                                    }
+                                                </span>
+                                                <span class="details">Details: <em>@item.Realty.Interior</em></span>
+                                                <ul class="info">
+                                                    <li><img src="~/images/listing-icon-02.png" alt="">@item.Realty.Bedrooms Phòng ngủ</li>
+                                                    <li><img src="~/images/listing-icon-03.png" alt=""> @item.Realty.Bathrooms Phòng VS</li>
+                                                </ul>
+                                                <div class="main-white-button">
+                                                    <a href="#" class="contact-now-btn"><i class="fa fa-eye"></i> Contact Now</a>
+                                                    <div class="contact-details" style="display:none"><i class="fa-solid fa-phone-volume" style="padding:15px;color:forestgreen"></i>@item.Account.Phone</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                count++;
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="item">
+                        <div class="row">
+                            @foreach (var item in (IEnumerable<Property.Models.Listing>)ViewData["Var2"])
+                            {
+                                <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId">
+                                    <div class="col-lg-12">
+                                        <div class="listing-item">
+                                            <div class="left-image">
+                                                @if (item.Realty.Images.Count > 0)
+                                                {
+                                                    foreach (var img in @item.Realty.Images)
+                                                    {
+                                                        if (img.Status == true)
+                                                        {
+                                                            continue;
+                                                        }
+                                                        <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><img class="img_listing" src="~/images/@img.ImageUrl" alt=""></a>
+                                                        break;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><img class="img_listing" src="~/images/noimg.gif" alt=""></a>
+                                                }
+                                            </div>
+                                            <div class="right-content align-self-center">
+                                                <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><h4 style="float:left">@count . </h4><h4 class="clamp-2-lines">@item.Title</h4></a>
+                                                <a asp-controller="Home" asp-action="Listing" asp-route-idaccount="@item.Account.AccountId">
+                                                    <h6>by: @item.Account.Name</h6>
+                                                </a>
+                                                <ul class="rate">
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li>(18) Reviews</li>
+                                                </ul>
+                                                <span class="price">
+                                                    <div class="icon"><img src="~/images/listing-icon-01.png" alt=""></div>
+                                                    @{
+                                                        string priceString = @item.Realty.Price.ToString().Replace(".", ",");
+                                                        if (priceString.EndsWith(",00"))
+                                                        {
+                                                            priceString = @item.Realty.Price.ToString().Replace(".00", " ");
+                                                        }
+                                                        <span>@priceString</span>
+                                                    }
+                                                    @if (@item.Realty.CategoryDetail.Category.CategoryId == 2)
+                                                    {
+                                                        <span>triệu / month</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        var price = (double)item.Realty.Price;
+                                                        price = price * 1000 / (double)item.Realty.Area;
+                                                        var formattedPrice = price.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
+                                                        <span>tỷ - @formattedPrice Triệu / m<sup>2</sup></span>
+                                                    }
+                                                </span>
+                                                <span class="details">Details: <em>@item.Realty.Interior</em></span>
+                                                <ul class="info">
+                                                    <li><img src="~/images/listing-icon-02.png" alt="">@item.Realty.Bedrooms Phòng ngủ</li>
+                                                    <li><img src="~/images/listing-icon-03.png" alt=""> @item.Realty.Bathrooms Phòng VS</li>
+                                                </ul>
+                                                <div class="main-white-button">
+                                                    <a href="#" class="contact-now-btn"><i class="fa fa-eye"></i> Contact Now</a>
+                                                    <div class="contact-details" style="display:none"><i class="fa-solid fa-phone-volume" style="padding:15px;color:forestgreen"></i>@item.Account.Phone</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                count++;
+                            }
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="row">
+                            @foreach (var item in (IEnumerable<Property.Models.Listing>)ViewData["Var3"])
+                            {
+                                <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId">
+                                    <div class="col-lg-12">
+                                        <div class="listing-item">
+                                            <div class="left-image">
+                                                @if (item.Realty.Images.Count > 0)
+                                                {
+                                                    foreach (var img in @item.Realty.Images)
+                                                    {
+                                                        if (img.Status == true)
+                                                        {
+                                                            continue;
+                                                        }
+                                                        <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><img class="img_listing" src="~/images/@img.ImageUrl" alt=""></a>
+                                                        break;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><img class="img_listing" src="~/images/noimg.gif" alt=""></a>
+                                                }
+                                            </div>
+                                            <div class="right-content align-self-center">
+                                                <a asp-action="chitietbds" asp-controller="Home" asp-route-id="@item.ListingId"><h4 style="float:left">@count . </h4><h4 class="clamp-2-lines">@item.Title</h4></a>
+                                                <a asp-controller="Home" asp-action="Listing" asp-route-idaccount="@item.Account.AccountId">
+                                                    <h6>by: @item.Account.Name</h6>
+                                                </a>
+                                                <ul class="rate">
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    <li>(18) Reviews</li>
+                                                </ul>
+                                                <span class="price">
+                                                    <div class="icon"><img src="~/images/listing-icon-01.png" alt=""></div>
+                                                    @{
+                                                        string priceString = @item.Realty.Price.ToString().Replace(".", ",");
+                                                        if (priceString.EndsWith(",00"))
+                                                        {
+                                                            priceString = @item.Realty.Price.ToString().Replace(".00", " ");
+                                                        }
+                                                        <span>@priceString</span>
+                                                    }
+                                                    @if (@item.Realty.CategoryDetail.Category.CategoryId == 2)
+                                                    {
+                                                        <span>triệu / month</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        var price = (double)item.Realty.Price;
+                                                        price = price * 1000 / (double)item.Realty.Area;
+                                                        var formattedPrice = price.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
+                                                        <span>tỷ - @formattedPrice Triệu / m<sup>2</sup></span>
+                                                    }
+                                                </span>
+                                                <span class="details">Details: <em>@item.Realty.Interior</em></span>
+                                                <ul class="info">
+                                                    <li><img src="~/images/listing-icon-02.png" alt="">@item.Realty.Bedrooms Phòng ngủ</li>
+                                                    <li><img src="~/images/listing-icon-03.png" alt=""> @item.Realty.Bathrooms Phòng VS</li>
+                                                </ul>
+                                                <div class="main-white-button">
+                                                    <a href="#" class="contact-now-btn"><i class="fa fa-eye"></i> Contact Now</a>
+                                                    <div class="contact-details" style="display:none"><i class="fa-solid fa-phone-volume" style="padding:15px;color:forestgreen"></i>@item.Account.Phone</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                count++;
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

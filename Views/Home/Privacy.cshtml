@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Property.Models.Realty>
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1 style="margin-top:100px;">@ViewData["Title"]</h1>
+@*
+<span>INSERT INTO Accounts </span>
+@foreach (var item in Model)
+{
+    <span>(@item.PackageId,N'@item.Username',N'@item.Password',N'@item.Name',N'@item.Address',N'@item.Phone',N'@item.Avatar',N'@item.Permissions',@if (item.Status == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        },@item.NumberPost),</span>
+    <br />
+}*@
+@*<span>INSERT INTO Categories </span>
+@foreach (var item in Model)
+{
+    <span>('@item.CategoryName','@item.Description',@if (item.Status == false) {<span>0</span>}else{<span>1</span>}),</span><br />
+}*@
+@*<span>INSERT INTO CategoryDetails </span>
+@foreach (var item in Model)
+{
+    <span>(@item.CategoryId,N'@item.CategoryDetailName',N'@item.Description',@if (item.Status == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        }),</span>
+    <br />
+}*@
+@*<span>INSERT INTO Packages </span>
+@foreach (var item in Model)
+{
+    <span>(N'@item.PackageName',@item.Price,@if (item.Status == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        },@item.NumberPost),</span>
+    <br />
+}*@
+<span>INSERT INTO Realties </span>
+@foreach (var item in Model)
+{
+    <span>
+        (N'@item.Title',N'@item.Address',@item.CategoryDetailId,@item.Price,@item.Bedrooms,@item.Bathrooms,@item.Bathrooms,N'@item.HouseDirection',N'@item.Interior',@item.Area,@if (item.Status == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        },N'@item.CreatedAt',@item.CategoryDetailId),</span>
+    <br />
+}
+@*<span>INSERT INTO Images </span>
+@foreach (var item in Model)
+{
+    <span>
+        (@item.RealtyId,N'@item.ImageUrl',@if (item.Status == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        }),</span>
+    <br />
+}*@
+@*<span>INSERT INTO Transactions </span>
+@foreach (var item in Model)
+{
+    <span>
+        (@item.AccountId,@item.PackageId,@item.Amount,'@item.PaymentDate',@if (item.Status == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        }),</span>
+    <br />
+}*@
+@*<span>INSERT INTO Listings </span>
+@foreach (var item in Model)
+{
+    <span>
+        (@item.RealtyId,@item.AccountId,N'@item.Title',N'@item.Description',@item.Location,N'@item.CreatedAt',N'@item.UpdatedAt',@if (item.Status == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        },@item.ViewAmount,@if (item.Duration == false)
+        {
+            <span>0</span>
+        }
+        else
+        {
+            <span>1</span>
+        }),
+    </span>
+    <br />
+*@}

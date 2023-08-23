@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Property.Models.Realty>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Danh sách bất động sản</h1>
+    @*<p>
+        <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
+    </p>*@
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryDetail)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Bedrooms)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Bathrooms)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.HouseDirection)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Interior)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Area)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Address)
+                            </th>
+                            <th width="150px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryDetail.CategoryDetailName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bedrooms)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bathrooms)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HouseDirection)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Interior)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Area)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.RealtyId" class="btn btn-outline-primary" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.RealtyId" class="btn btn-outline-warning" title="Detail"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a onclick="deletee(@item.RealtyId);" href="#" class="btn btn-outline-danger" title="delete"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@if (ViewBag.er!=null)
+{
+    <script>
+        alert("Không thể xóa bds này do nó đang có bài đăng!");
+    </script>
+}
+
+@section Scripts {
+    <script>
+        function deletee(ID) {
+            if (confirm("Do you want to delete?")) {
+                var url = '@Url.Action("Delete", "Realties", new { area = "Admin" })';
+                url = url + "?id=" + ID;
+                location.href = url;
+            }
+        }
+    </script>
+}

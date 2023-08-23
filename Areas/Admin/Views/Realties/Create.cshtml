@@ -1,0 +1,100 @@
+﻿@model Property.Models.Realty
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@*
+<h1>Thêm mới bất động sản</h1>
+<form asp-action="Create" asp-controller="Realties" asp-area="Admin" method="post">
+    <div clas="row" style="margin-bottom:100px;">
+        <div class="create_container">
+            <div class="create_header">
+                <h4>Thông tin cơ bản</h4>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Tên bất động sản <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Thể loại đất <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="createlt_address">
+                <div class="createlt_title">
+                    Lượt đăng <i class="fa-solid fa-star-of-life star_createlt"></i>
+                </div>
+                <input asp-for="NumberPost" class="form-control" type="number" />
+                <span asp-validation-for="NumberPost" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn_profile btn_submit" style="margin-top:20px;">submit</button>
+        </div>
+    </div>
+</form>*@
+<h1>Create</h1>
+
+<h4>Property</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryDetailId" class="control-label"></label>
+                <select asp-for="CategoryDetailId" class="form-control" asp-items="ViewBag.CategoryDetailId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bedrooms" class="control-label"></label>
+                <input asp-for="Bedrooms" class="form-control" />
+                <span asp-validation-for="Bedrooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bathrooms" class="control-label"></label>
+                <input asp-for="Bathrooms" class="form-control" />
+                <span asp-validation-for="Bathrooms" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseDirection" class="control-label"></label>
+                <input asp-for="HouseDirection" class="form-control" />
+                <span asp-validation-for="HouseDirection" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Interior" class="control-label"></label>
+                <input asp-for="Interior" class="form-control" />
+                <span asp-validation-for="Interior" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Area" class="control-label"></label>
+                <input asp-for="Area" class="form-control" />
+                <span asp-validation-for="Area" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

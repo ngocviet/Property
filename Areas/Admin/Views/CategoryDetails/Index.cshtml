@@ -1,0 +1,70 @@
+﻿@model IEnumerable<CategoryDetail>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Danh sách thể loại nhà đất</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
+    </p>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CategoryDetailName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Category)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryDetailName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.CategoryDetailId" class="btn btn-outline-primary" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.CategoryDetailId" class="btn btn-outline-warning" title="Detail"><i class="fa-solid fa-circle-info"></i></a>
+                                    <a onclick="deletee(@item.CategoryDetailId);" href="#" class="btn btn-outline-danger" title="delete"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function deletee(ID) {
+            //if (confirm("Do you want to delete?")) {
+            //    var url = '@Url.Action("Delete", "CategoryDetails", new { area = "Admin" })';
+            //    url = url + "?id=" + ID;
+            //    location.href = url;
+            //}
+
+            alert('Không thể xóa trường này!');
+        }
+    </script>
+}
+

@@ -1,0 +1,56 @@
+﻿@model Account
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Chi tiết tài khoản</h1>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-lg-8 profile_body">
+        <div class="profile_name">
+            Tên người dùng: 
+            <span class="profile_content">@Model.Name.ToUpper()</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Tên đăng nhập:
+            <span class="profile_content">@Model.Username</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Số điện thoại:
+            <span class="profile_content">@Model.Phone</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Địa chỉ:
+            <span class="profile_content">@Model.Address</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Loại tài khoản:
+            <span class="profile_content">@Model.Permissions</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Gói đăng đang dùng:
+            <span class="profile_content">@Model.Package.PackageName - còn @Model.NumberPost lượt đăng </span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Số bài đã đăng:
+            <span class="profile_content">@ViewBag.sobaidang</span>
+        </div>
+        <div class="profile_item">
+            <i class="fa-solid fa-pen-to-square"></i>Số bài đăng đã hết hạn:
+            <span class="profile_content">@ViewBag.sobaihethan</span>
+        </div>
+    </div>
+    <div class="col-lg-4 profile_img">
+        <img class="main_img" src="~/images/@Model.Avatar" />
+        <div class="btn_chon_anh">
+            <input class="form-control" type="file" name="img" hidden accept="image/*" id="avatar-input">
+            <input id="avatar-file-name" hidden class="text-muted form-control" asp-for="Avatar" />
+            <button type="button" class="btn btn_profile btn_chooseimg" style="display:none" onclick="chooseFile()">Chọn ảnh</button>
+        </div>
+    </div>
+</div>

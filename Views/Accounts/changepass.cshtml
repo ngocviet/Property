@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+    <title>Đổi mật khẩu</title>
+    <link rel="stylesheet" href="~/css/login.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/0c165f78c1.js" crossorigin="anonymous"></script>
+}
+<div class="container">
+    <h1>Đổi mật khẩu</h1>
+    <form asp-action="changepass" asp-controller="Accounts" method="post">
+        <div class="form__row">
+            <i class="fa-solid fa-envelope icon icon_email"></i>
+            <input name="currentPass" type="password" class="form__input" placeholder="Mật khẩu hiện tại" autocomplete="off">
+        </div>
+        <div class="form__row">
+            <i class="fa-solid fa-lock icon icon_pass"></i>
+            <input name="newPass" type="password" class="form__input" placeholder="Mật khẩu mới">
+        </div>
+        <div class="form__row form__but">
+            <button type="submit" class="btn">Tiếp tục</button>
+        </div>
+        @if (ViewBag.ErrorMessage != null)
+        {
+                <div class="form__row">
+                <p class="error-message">@ViewBag.ErrorMessage</p>
+                </div>
+        }
+        <input type="text" hidden value="@ViewBag.SuccessMessage" id="messId"/>
+    </form>
+</div>
+<script>
+    var successMessage = document.getElementById("messId").value;
+    if (successMessage !== "") {
+        alert('Đổi mật khẩu thành công hãy đăng nhập lại!');
+            window.location.href = "/logout.html";
+    }
+</script>

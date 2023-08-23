@@ -1,0 +1,51 @@
+﻿@model Image
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Image</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ImageId" />
+            <div class="form-group">
+                <label asp-for="RealtyId" class="control-label"></label>
+                <select asp-for="RealtyId" class="form-control" asp-items="ViewBag.RealtyId"></select>
+                <span asp-validation-for="RealtyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label><br />
+                <input class="form-control" type="file" name="img" hidden accept="image/*" id="avatar-input">
+                <input asp-for="ImageUrl" id="avatar-file-name" class="text-muted form-control" />
+                <button type="button" onclick="chooseFile()">Chọn ảnh</button>
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        function chooseFile() {
+            document.getElementById('avatar-input').click();
+        }
+        document.getElementById('avatar-input').addEventListener('change', function () {
+            var fileInput = document.getElementById('avatar-input');
+            var fileNameInput = document.getElementById('avatar-file-name');
+            fileNameInput.value = fileInput.files[0].name;
+        });
+    </script>
+}

@@ -1,0 +1,87 @@
+﻿@model Property.Models.Account
+@{
+    ViewData["Title"] = "Hồ sơ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-action="update" asp-controller="Accounts" asp-area="">
+    <div class="main-banner banner_profile">
+        <div class="container">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+    <div class="container container_profile">
+        <div class="row profile">
+            <div class="col-lg-4 profile_img">
+                <img class="main_img" src="~/images/@Model.Avatar" />
+                <div class="btn_chon_anh">
+                    <input class="form-control" type="file" name="img" hidden accept="image/*" id="avatar-input">
+                    <input id="avatar-file-name" hidden class="text-muted form-control" asp-for="Avatar" />
+                    <button type="button" class="btn btn_profile btn_chooseimg" style="display:none" onclick="chooseFile()">Chọn ảnh</button>
+                </div>
+            </div>
+            <div class="col-lg-8 profile_body">
+                <input value="@ViewBag.SuccessMessage" id="messId" />
+                <input type="hidden" asp-for="AccountId" />
+                <input type="hidden" asp-for="Username" />
+                <input type="hidden" asp-for="PackageId" />
+                <input type="hidden" asp-for="Permissions" />
+                <input type="hidden" asp-for="Password" />
+                <input type="hidden" asp-for="NumberPost" />
+                <div class="profile_name"><span class="profile_content">@Model.Name.ToUpper()</span><input type="text" asp-for="Name" autocomplete="off" /></div>
+                <div class="profile_phone"><i class="fa-solid fa-phone-volume"></i><span class="profile_content">@Model.Phone</span><input type="text" asp-for="Phone" autocomplete="off" /></div>
+                <div class="profile_address"><i class="fa-solid fa-location-dot"></i><span class="profile_content">@Model.Address</span><input type="text" asp-for="Address" autocomplete="off" /></div>
+                <div class="profile_permission"><i class="fa-solid fa-circle-user"></i>@Model.Permissions</div>
+                <div class="profile_package"><i class="fa-solid fa-pen-to-square"></i>Đang sử dụng: @Model.Package.PackageName - còn @Model.NumberPost lượt đăng bài</div>
+                <div class="profile_post"><i class="fa-solid fa-pen-to-square"></i>Đã đăng: @Model.Listings.Count() bài</div>
+                <button type="button" onclick="chinhsua()" class="btn btn_profile btn_profile_update">Chỉnh sửa</button>
+                <button type="submit" class="btn btn_profile btn_profile_submit">OK</button>
+                <a href="/changepass.html" class="btn btn_profile btn_profile_change">Đổi mật khẩu</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function chinhsua() {
+        var profileName = document.querySelector('.profile_name');
+        var profilePhone = document.querySelector('.profile_phone');
+        var profileAddress = document.querySelector('.profile_address');
+        var spans = document.querySelectorAll('.profile_content');
+
+        var btnChinhsua = document.querySelector('.btn_profile_update');
+        btnChinhsua.style.display = "none";
+        var btnChinhsua = document.querySelector('.btn_profile_submit');
+        btnChinhsua.style.display = "block";
+        var btnChooseImg = document.querySelector('.btn_chooseimg');
+        btnChooseImg.style.display = 'block';
+        for (var i = 0; i < spans.length; i++) {
+            spans[i].style.display = 'none';
+            spans[i].nextElementSibling.style.display = 'block';
+        }
+    }
+    function chooseFile() {
+        document.getElementById('avatar-input').click();
+    }
+    document.getElementById('avatar-input').addEventListener('change', function () {
+        var fileInput = document.getElementById('avatar-input');
+        var fileNameInput = document.getElementById('avatar-file-name');
+        fileNameInput.value = fileInput.files[0].name;
+
+        var selectedImageFile = fileInput.files[0];
+        // Check if a file is selected
+        if (selectedImageFile) {
+            fileNameInput.value = selectedImageFile.name;
+            var imagePath = "/images/" + selectedImageFile.name;
+            document.querySelector('.main_img').src = imagePath;
+        }
+    });
+    var successMessage = document.getElementById("messId").value;
+    if (successMessage !== "") {
+        alert("Chỉnh sửa thành công! Vui lòng đăng nhập lại!")
+        //if (confirm(successMessage)) {
+        window.location.href = "/logout.html";
+        //}
+    }
+</script>
+
